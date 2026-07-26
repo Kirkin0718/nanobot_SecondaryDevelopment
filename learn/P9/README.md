@@ -15,7 +15,8 @@
 | [`workspace-layout.md`](./workspace-layout.md) | 目录约定与初始化 |
 | [`implementation-roadmap.md`](./implementation-roadmap.md) | PR-1～PR-3 里程碑 |
 | [`retrospective-webui-coach.md`](./retrospective-webui-coach.md) | **动线工作台回顾、启示与性能向二次开发** |
-| [`iteration-a-three-prs.md`](./iteration-a-three-prs.md) | **迭代 A：三个性能 PR 边界与验收** |
+| [`iteration-a-three-prs.md`](./iteration-a-three-prs.md) | **迭代 A：三个性能 PR 边界与验收（速查）** |
+| [`iteration-a/README.md`](./iteration-a/README.md) | **迭代 A 维护手册**（TTL / 序列化防抖 / Scope 上限） |
 | [`install.ps1`](./install.ps1) | 一键安装到 workspace（Windows） |
 | [`HEARTBEAT.example.md`](./HEARTBEAT.example.md) | 拷贝到 workspace |
 | [`prompts/dream-coach.example.md`](./prompts/dream-coach.example.md) | Dream 归档规则（可选） |
@@ -55,6 +56,7 @@
 
 | 日期 | 选题 | PR/分支 | 状态 |
 |------|------|---------|------|
+| 2026-07-26 | 迭代 A：Coach TTL / 笔记序列化防抖 / Scope 12k | [#1](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/1) [#2](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/2) [#3](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/3) → `base/pre-iteration-a` | 三阶段完成；维护见 [`iteration-a/`](./iteration-a/) |
 | 2026-07-25 | WebUI 动线工作台 + P0～P2 收口 | — | 已落地；回顾见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md) |
 | 2026-07-24 | Coach UI chips + panel | — | 接线完成：buttons 全链路、GoalCoachPanel→抽屉拆分、coach API、Skill |
 | | PR-1 捕获+目录 | | 已演示 |
@@ -65,4 +67,5 @@
 ## 笔记
 
 - WebUI 动线、状态同步、性能向二次开发：见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md)。
+- 迭代 A（性能三切片）调参与排障：见 [`iteration-a/README.md`](./iteration-a/README.md)。
 - 实现时优先还「coach 单源 + UI 职责」债，再扩 Hub/日历等功能。

@@ -1,7 +1,8 @@
 # 迭代 A — 三个独立 PR（性能热点）
 
-> 代码已在本工作区落地。当前目录 **没有 `.git`**，无法直接 `gh pr create`。  
-> 恢复 git 远程后，按下列边界各开一个 PR（建议从 `main` 独立分叉，无强依赖）。
+> **维护手册（详细行为 / 调参 / 故障）：** [`iteration-a/README.md`](./iteration-a/README.md)  
+> 状态：三 PR 已开并向 `base/pre-iteration-a` 合入（2026-07-26）。  
+> 背景见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md) §4.5。
 
 ```mermaid
 flowchart LR
@@ -10,11 +11,17 @@ flowchart LR
   C[PR3 Scope 字符上限] --> done
 ```
 
+| PR | 链接 | 维护文档 |
+|----|------|----------|
+| PR1 Coach TTL | [#1](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/1) | [`iteration-a/01-coach-ttl.md`](./iteration-a/01-coach-ttl.md) |
+| PR2 序列化防抖 | [#2](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/2) | [`iteration-a/02-notes-serialize-debounce.md`](./iteration-a/02-notes-serialize-debounce.md) |
+| PR3 Scope 上限 | [#3](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/3) | [`iteration-a/03-notes-scope-cap.md`](./iteration-a/03-notes-scope-cap.md) |
+
 ---
 
 ## PR1 — Coach 请求 TTL + in-flight 去重
 
-**标题建议：** `perf(webui): dedupe coach GET with TTL and turn-end debounce`
+**标题：** `perf(webui): dedupe coach GET with TTL and turn-end debounce`
 
 **改动文件：**
 - `webui/src/hooks/useCoachState.ts`（核心）
@@ -34,7 +41,7 @@ flowchart LR
 
 ## PR2 — 笔记序列化移出按键路径
 
-**标题建议：** `perf(webui): debounce rich-notes htmlToMarkdown on input`
+**标题：** `perf(webui): debounce rich-notes htmlToMarkdown on input`
 
 **改动文件：**
 - `webui/src/components/coach/RichNotesEditor.tsx`
@@ -49,7 +56,7 @@ flowchart LR
 
 ## PR3 — Scope 字符上限
 
-**标题建议：** `perf(webui): cap AI notes scope to 12k chars`
+**标题：** `perf(webui): cap AI notes scope to 12k chars`
 
 **改动文件：**
 - `webui/src/components/coach/NotesDrawer.tsx`
@@ -64,29 +71,8 @@ flowchart LR
 
 ---
 
-## 开 PR 命令（有 git 后）
+## 开 PR / 合入备忘
 
-```powershell
-# 先恢复仓库（示例）
-# git clone <remote> ...
+基线：`base/pre-iteration-a`。三分支互不依赖，可并行 `gh pr merge`。
 
-git checkout main
-git pull
-
-git checkout -b perf/coach-ttl
-# 只提交 PR1 文件
-git push -u origin HEAD
-gh pr create --title "perf(webui): dedupe coach GET with TTL and turn-end debounce" --body "..."
-
-git checkout main
-git checkout -b perf/notes-serialize-debounce
-# 只提交 PR2 文件
-...
-
-git checkout main
-git checkout -b perf/notes-scope-cap
-# 只提交 PR3 文件
-...
-```
-
-若本地改动已混在一起，可用 `git add -p` 按文件拆到三个分支。
+合入后改行为或常量，请先改 [`iteration-a/`](./iteration-a/) 对应文档，再改代码。

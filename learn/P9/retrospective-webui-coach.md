@@ -186,8 +186,9 @@
 
 ### 4.5 建议的下一迭代切片（可演示）
 
-**迭代 A（约 0.5～1 天）**  
+**迭代 A（约 0.5～1 天）— 已完成（2026-07-26）**  
 Coach TTL + in-flight 去重 + 笔记序列化移出按键路径 + scope 截断。  
+PR：[#1](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/1) [#2](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/2) [#3](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/3)；维护手册：[`iteration-a/README.md`](./iteration-a/README.md)。  
 验收：Network 面板同会话打开三次抽屉，coach GET 次数明显下降；大笔记输入不卡。
 
 **迭代 B（约 1～2 天）**  
@@ -205,6 +206,7 @@ Hub 懒预览 + 教练抽屉 lazy + Journey/Progress 与消息列表渲染隔离
 |------|------|
 | [`product-spec.md`](./product-spec.md) | 产品目标与验收；本文补「WebUI 落地后的债与性能」 |
 | [`implementation-roadmap.md`](./implementation-roadmap.md) | PR-1～3 仍以 Skill/workspace 为主；WebUI 动线是并行增强轨 |
+| [`iteration-a/README.md`](./iteration-a/README.md) | 迭代 A 三切片合入后的行为契约、调参与排障 |
 | [`SAFEGUARDS.md`](./SAFEGUARDS.md) | 安全护栏不变；性能优化不得削弱同意安装/等待用户语义 |
 | [`workspace-layout.md`](./workspace-layout.md) | 文件约定仍是真相源；索引侧车只能是加速层 |
 
