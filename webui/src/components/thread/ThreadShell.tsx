@@ -369,8 +369,8 @@ export function ThreadShell({
   const coachState = useCoachState(historyKey);
   const handleTurnEnd = useCallback(() => {
     onTurnEnd?.();
-    coachState.refreshSoon();
-  }, [coachState.refreshSoon, onTurnEnd]);
+    void coachState.refresh();
+  }, [coachState, onTurnEnd]);
   const {
     messages,
     isStreaming,

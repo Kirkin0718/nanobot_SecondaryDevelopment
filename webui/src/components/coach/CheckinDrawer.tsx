@@ -69,7 +69,7 @@ export function CheckinDrawer({
     try {
       await postCoachCheckin(token, sessionKey, note.trim() || undefined);
       setNote("");
-      await refresh({ force: true });
+      await refresh();
       onCheckedIn?.();
       setError(null);
     } catch (e) {

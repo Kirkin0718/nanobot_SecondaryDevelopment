@@ -79,35 +79,11 @@ export function RichNotesEditor({
     onChange(md);
   };
 
-  const emitTimer = useRef<number | null>(null);
-
-  const scheduleEmit = () => {
-    if (emitTimer.current !== null) window.clearTimeout(emitTimer.current);
-    emitTimer.current = window.setTimeout(() => {
-      emitTimer.current = null;
-      emit();
-    }, 900);
-  };
-
-  const flushEmit = () => {
-    if (emitTimer.current !== null) {
-      window.clearTimeout(emitTimer.current);
-      emitTimer.current = null;
-    }
-    emit();
-  };
-
-  useEffect(() => {
-    return () => {
-      if (emitTimer.current !== null) window.clearTimeout(emitTimer.current);
-    };
-  }, []);
-
   const run = (fn: () => void) => {
     if (disabled) return;
     fn();
     editorRef.current?.focus();
-    flushEmit();
+    emit();
   };
 
   const tocTitle = i18n.language?.toLowerCase().startsWith("zh") ? "目录" : "TOC";
@@ -127,7 +103,7 @@ export function RichNotesEditor({
     const text = event.clipboardData.getData("text/plain");
     if (html) insertSanitizedPaste(html, true);
     else if (text) insertSanitizedPaste(text, false);
-    flushEmit();
+    emit();
   };
 
   return (
@@ -258,8 +234,8 @@ export function RichNotesEditor({
         contentEditable={!disabled}
         suppressContentEditableWarning
         data-placeholder={placeholder}
-        onInput={scheduleEmit}
-        onBlur={flushEmit}
+        onInput={emit}
+        onBlur={emit}
         onPaste={onPaste}
         className={cn(
           "min-h-[12rem] flex-1 overflow-y-auto px-4 py-3 text-[15px] leading-relaxed outline-none",

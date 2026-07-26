@@ -1,4 +1,4 @@
-{
+﻿{
   "app": {
     "brand": "nanobot",
     "loading": {
@@ -1039,8 +1039,6 @@
         "emptyPreview": "暂无内容可预览。",
         "pickScope": "选择对话范围",
         "scopeTitle": "已选 {{count}} 条消息",
-        "scopeTruncated": "实际写入提示的为 {{used}}/{{selected}} 条（上限 {{limit}} 字符）。",
-        "scopeTruncatedNote": "（已将勾选对话截断至 {{limit}} 字符以适应模型提示长度。）",
         "selectAll": "全选",
         "clearAll": "清空",
         "scopeEmpty": "暂无可选对话消息。",

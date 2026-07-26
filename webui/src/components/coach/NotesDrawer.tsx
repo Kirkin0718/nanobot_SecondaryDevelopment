@@ -42,59 +42,20 @@ function clip(text: string, n = 160): string {
   return one.length <= n ? one : `${one.slice(0, n - 1)}…`;
 }
 
-/** Soft cap for AI note prompts (chars of scoped chat body). */
-export const NOTES_SCOPE_CHAR_LIMIT = 12_000;
-
 function buildScopedChatBlock(
   messages: UIMessage[],
   selectedIds: Set<string>,
-  limit = NOTES_SCOPE_CHAR_LIMIT,
-): { text: string; truncated: boolean; usedIds: string[] } {
+): string {
   const picked = messages.filter((m) => selectedIds.has(m.id));
-  if (picked.length === 0) return { text: "", truncated: false, usedIds: [] };
-
-  const chunks: string[] = [];
-  const usedIds: string[] = [];
-  let used = 0;
-  let truncated = false;
-  for (const m of picked) {
-    const piece = `[${m.role}]\n${m.content.trim()}`;
-    const sep = chunks.length ? "\n\n---\n\n" : "";
-    if (used + sep.length + piece.length > limit) {
-      const remain = limit - used - sep.length;
-      if (remain > 80) {
-        chunks.push(`${piece.slice(0, remain)}…`);
-        usedIds.push(m.id);
-      }
-      truncated = true;
-      break;
-    }
-    chunks.push(piece);
-    usedIds.push(m.id);
-    used += sep.length + piece.length;
-  }
-  if (usedIds.length < picked.length) truncated = true;
-  return { text: chunks.join("\n\n---\n\n"), truncated, usedIds };
+  if (picked.length === 0) return "";
+  return picked
+    .map((m) => `[${m.role}]\n${m.content.trim()}`)
+    .join("\n\n---\n\n");
 }
 
-/** Prefer recent messages that fit under the char budget. */
-function selectIdsWithinBudget(
-  messages: UIMessage[],
-  limit = NOTES_SCOPE_CHAR_LIMIT,
-  maxCount = 24,
-): Set<string> {
-  const recent = messages.slice(-maxCount);
-  const ids = new Set<string>();
-  let used = 0;
-  for (let i = recent.length - 1; i >= 0; i -= 1) {
-    const m = recent[i];
-    const piece = `[${m.role}]\n${m.content.trim()}`;
-    const sep = ids.size ? "\n\n---\n\n".length : 0;
-    if (used + sep + piece.length > limit) break;
-    ids.add(m.id);
-    used += sep + piece.length;
-  }
-  return ids;
+/** Default-select up to the most recent N chat messages. */
+function selectRecentIds(messages: UIMessage[], maxCount = 24): Set<string> {
+  return new Set(messages.slice(-maxCount).map((m) => m.id));
 }
 
 export function NotesDrawer({
@@ -190,7 +151,7 @@ export function NotesDrawer({
       setPickingScope(false);
       return;
     }
-    setSelectedIds(selectIdsWithinBudget(chatChoices));
+    setSelectedIds(selectRecentIds(chatChoices));
   }, [open, chatChoices]);
 
   useEffect(() => {
@@ -236,38 +197,19 @@ export function NotesDrawer({
   );
 
   const buildScopedPrompt = (kind: "generate" | "enrich") => {
-    const { text: scopeBlock, truncated } = buildScopedChatBlock(
-      chatChoices,
-      selectedIds,
-    );
+    const scopeBlock = buildScopedChatBlock(chatChoices, selectedIds);
     const path = resolvedNotesPath || "";
-    const truncNote = truncated
-      ? `\n\n${t("thread.coach.drawer.scopeTruncatedNote", {
-          limit: NOTES_SCOPE_CHAR_LIMIT,
-        })}`
-      : "";
     if (kind === "generate") {
       if (scopeBlock) {
-        return (
-          t("thread.coach.prompts.generateWithScope", { path, scope: scopeBlock })
-          + truncNote
-        );
+        return t("thread.coach.prompts.generateWithScope", { path, scope: scopeBlock });
       }
       return t("thread.coach.prompts.generateWithoutScope", { path });
     }
     if (scopeBlock) {
-      return (
-        t("thread.coach.prompts.enrichWithScope", { path, scope: scopeBlock })
-        + truncNote
-      );
+      return t("thread.coach.prompts.enrichWithScope", { path, scope: scopeBlock });
     }
     return t("thread.coach.prompts.enrichWithoutScope", { path });
   };
-
-  const scopeStats = useMemo(
-    () => buildScopedChatBlock(chatChoices, selectedIds),
-    [chatChoices, selectedIds],
-  );
 
   const onGenerate = () => {
     if (!resolvedNotesPath || busy) return;
@@ -446,9 +388,7 @@ export function NotesDrawer({
                       variant="ghost"
                       className="h-7 px-2 text-[12px]"
                       onClick={() =>
-                        setSelectedIds(
-                          selectIdsWithinBudget(chatChoices, NOTES_SCOPE_CHAR_LIMIT, chatChoices.length),
-                        )
+                        setSelectedIds(new Set(chatChoices.map((m) => m.id)))
                       }
                     >
                       {t("thread.coach.drawer.selectAll")}
@@ -464,18 +404,6 @@ export function NotesDrawer({
                     </Button>
                   </div>
                 </div>
-                {scopeStats.truncated ? (
-                  <p
-                    className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1.5 text-[12px] text-amber-900 dark:text-amber-100"
-                    data-testid="notes-scope-truncated"
-                  >
-                    {t("thread.coach.drawer.scopeTruncated", {
-                      limit: NOTES_SCOPE_CHAR_LIMIT,
-                      used: scopeStats.usedIds.length,
-                      selected: selectedIds.size,
-                    })}
-                  </p>
-                ) : null}
                 {chatChoices.length === 0 ? (
                   <p className="text-[13px] text-muted-foreground">
                     {t("thread.coach.drawer.scopeEmpty")}
