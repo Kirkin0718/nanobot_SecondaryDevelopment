@@ -1,0 +1,30 @@
+{
+  "id": "progress-update-path-log",
+  "prompt": "今天学了第 1 章变量和类型",
+  "tags": ["progress"],
+  "setup": {
+    "learning/python-basics/path.md": "# Python basics\n\n## 当前进度\n- 阶段：第 1 / 4 周\n\n## Today\n- [ ] 读第 1 章\n",
+    "learning/python-basics/log.md": "# Log\n\n"
+  },
+  "script": [
+    {
+      "op": "append_file",
+      "path": "learning/python-basics/log.md",
+      "content": "- 2026-07-26 第 1 章变量和类型\n"
+    },
+    {
+      "op": "write_file",
+      "path": "learning/python-basics/path.md",
+      "content": "# Python basics\n\n## 当前进度\n- 阶段：第 1 / 4 周 — 类型基础进行中\n\n## Today\n- [x] 读第 1 章\n"
+    },
+    {"op": "record_tool", "name": "edit_file"}
+  ],
+  "expect": {
+    "files_contain": [
+      {"path": "learning/python-basics/log.md", "text": "变量和类型"},
+      {"path": "learning/python-basics/path.md", "text": "[x] 读第 1 章"}
+    ],
+    "tools_used": ["edit_file"]
+  },
+  "failure_type_on_fail": "wrong_file"
+}

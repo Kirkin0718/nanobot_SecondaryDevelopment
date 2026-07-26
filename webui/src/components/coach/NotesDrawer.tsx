@@ -63,7 +63,8 @@ function buildScopedChatBlock(
     if (used + sep.length + piece.length > limit) {
       const remain = limit - used - sep.length;
       if (remain > 80) {
-        chunks.push(`${piece.slice(0, remain)}…`);
+        const cut = Math.max(0, remain - 1);
+        chunks.push(`${piece.slice(0, cut)}…`);
         usedIds.push(m.id);
       }
       truncated = true;

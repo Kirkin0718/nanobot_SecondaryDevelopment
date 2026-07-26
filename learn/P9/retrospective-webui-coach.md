@@ -208,6 +208,8 @@ Hub 懒预览 + 教练抽屉 lazy + Journey/Progress 与消息列表渲染隔离
 | [`implementation-roadmap.md`](./implementation-roadmap.md) | PR-1～3 仍以 Skill/workspace 为主；WebUI 动线是并行增强轨 |
 | [`iteration-a/README.md`](./iteration-a/README.md) | 迭代 A 三切片合入后的行为契约、调参与排障 |
 | [`SAFEGUARDS.md`](./SAFEGUARDS.md) | 安全护栏不变；性能优化不得削弱同意安装/等待用户语义 |
+| [`iteration-a/README.md`](./iteration-a/README.md) | 迭代 A 三切片合入后的行为契约、调参与排障 |
+| [`SHOWCASE.md`](./SHOWCASE.md) / [`retrospective-agent.md`](./retrospective-agent.md) | 简历级演示与 Agent 机制复盘 |
 | [`workspace-layout.md`](./workspace-layout.md) | 文件约定仍是真相源；索引侧车只能是加速层 |
 
 ---

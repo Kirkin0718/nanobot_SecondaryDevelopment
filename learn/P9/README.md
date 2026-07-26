@@ -1,15 +1,24 @@
 # Phase 9：个人办公/学习教练
 
-**状态**：落地包已就绪（2026-07-23）  
+**状态**：简历级收束已就绪（2026-07-26）——演示 / 机制说明 / eval / 复盘  
+**作品入口**：[`SHOWCASE.md`](./SHOWCASE.md)  
 **总览**：[`../learning-roadmap.md`](../learning-roadmap.md) § Phase 9
 
 ## 选题
 
 **楔子 A + B**：碎片整理 + 晨间简报 + 学习路径 + 长期目标指导。
 
+**一句话**：面向自学者的文件真源学习教练 Agent（基于 nanobot）。
+
 | 文档 | 说明 |
 |------|------|
-| [`QUICKSTART.md`](./QUICKSTART.md) | **10 分钟上手**（推荐先看） |
+| [`SHOWCASE.md`](./SHOWCASE.md) | **作品演示入口（推荐评审先看）** |
+| [`BASELINE.md`](./BASELINE.md) | 作品对齐与黄金路径基线 |
+| [`architecture-agent.md`](./architecture-agent.md) | Agent loop / 工具 / 上下文 / 权限 |
+| [`eval/README.md`](./eval/README.md) | Eval harness（通过率 / 失败类型 / 延迟 / token） |
+| [`retrospective-agent.md`](./retrospective-agent.md) | 机制复盘 + 简历 bullet |
+| [`NEXT.md`](./NEXT.md) | 有数据后再加深的决策板 |
+| [`QUICKSTART.md`](./QUICKSTART.md) | **10 分钟上手** |
 | [`SAFEGUARDS.md`](./SAFEGUARDS.md) | 安全与体验护栏（禁止擅自安装等） |
 | [`product-spec.md`](./product-spec.md) | 产品定位、用户故事、验收指标 |
 | [`workspace-layout.md`](./workspace-layout.md) | 目录约定与初始化 |
@@ -56,7 +65,8 @@
 
 | 日期 | 选题 | PR/分支 | 状态 |
 |------|------|---------|------|
-| 2026-07-26 | 迭代 A：Coach TTL / 笔记序列化防抖 / Scope 12k | [#1](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/1) [#2](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/2) [#3](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/3) → `base/pre-iteration-a` | 三阶段完成；维护见 [`iteration-a/`](./iteration-a/) |
+| 2026-07-26 | 简历级收束：SHOWCASE + architecture + eval + 复盘 | `learn/P9/*` | 完成；eval mock **13/13**；见 [`SHOWCASE.md`](./SHOWCASE.md) |
+| 2026-07-26 | 迭代 A：Coach TTL / 笔记序列化防抖 / Scope 12k | [#1](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/1) [#2](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/2) [#3](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/3) → `main` | 三阶段完成；维护见 [`iteration-a/`](./iteration-a/) |
 | 2026-07-25 | WebUI 动线工作台 + P0～P2 收口 | — | 已落地；回顾见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md) |
 | 2026-07-24 | Coach UI chips + panel | — | 接线完成：buttons 全链路、GoalCoachPanel→抽屉拆分、coach API、Skill |
 | | PR-1 捕获+目录 | | 已演示 |
@@ -66,6 +76,8 @@
 
 ## 笔记
 
+- **作品评审入口**：[`SHOWCASE.md`](./SHOWCASE.md)；机制复盘：[`retrospective-agent.md`](./retrospective-agent.md)。
 - WebUI 动线、状态同步、性能向二次开发：见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md)。
 - 迭代 A（性能三切片）调参与排障：见 [`iteration-a/README.md`](./iteration-a/README.md)。
+- 下一步加深（简报 / live eval / 迭代 B）见 [`NEXT.md`](./NEXT.md)。
 - 实现时优先还「coach 单源 + UI 职责」债，再扩 Hub/日历等功能。

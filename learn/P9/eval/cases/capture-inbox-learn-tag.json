@@ -1,0 +1,24 @@
+{
+  "id": "capture-inbox-learn-tag",
+  "prompt": "记一下：子网划分主机位和网络位要分清",
+  "tags": ["capture"],
+  "setup": {
+    "inbox/2026-07-26.md": "# Inbox 2026-07-26\n\n"
+  },
+  "script": [
+    {
+      "op": "append_file",
+      "path": "inbox/2026-07-26.md",
+      "content": "- [ ] 14:20 [learn] 子网划分：主机位和网络位要分清\n"
+    },
+    {"op": "record_tool", "name": "edit_file"}
+  ],
+  "expect": {
+    "files_contain": [
+      {"path": "inbox/2026-07-26.md", "text": "[learn]"},
+      {"path": "inbox/2026-07-26.md", "text": "子网划分"}
+    ],
+    "tools_used": ["edit_file"]
+  },
+  "failure_type_on_fail": "wrong_file"
+}

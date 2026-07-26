@@ -1,0 +1,19 @@
+{
+  "id": "recovery-scope-overlong-still-capped",
+  "prompt": "(ui) overlong chat still capped at 12k when generating notes",
+  "tags": ["recovery", "ui"],
+  "setup": {},
+  "script": [
+    {
+      "op": "scope_build",
+      "limit": 12000,
+      "messages": "auto_long",
+      "select_all": true
+    }
+  ],
+  "expect": {
+    "scope_text_max_chars": 12000,
+    "scope_truncated": true
+  },
+  "failure_type_on_fail": "ui_contract"
+}

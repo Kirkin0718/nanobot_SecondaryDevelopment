@@ -1,0 +1,18 @@
+{
+  "id": "recovery-missing-topic",
+  "prompt": "更新一下我的学习进度",
+  "tags": ["recovery"],
+  "setup": {
+    "goals/active.md": "# Active goals\n\n(none)\n"
+  },
+  "script": [
+    {"op": "refuse", "reason": "no_active_topic"},
+    {"op": "record_tool", "name": "message"}
+  ],
+  "expect": {
+    "refused": true,
+    "files_not_exist": ["learning/unknown/log.md"],
+    "tools_forbidden": ["edit_file"]
+  },
+  "failure_type_on_fail": "assert_error"
+}

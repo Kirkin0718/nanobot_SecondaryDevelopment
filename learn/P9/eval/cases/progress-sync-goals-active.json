@@ -1,0 +1,24 @@
+{
+  "id": "progress-sync-goals-active",
+  "prompt": "进度同步一下 goals",
+  "tags": ["progress"],
+  "setup": {
+    "learning/python-basics/path.md": "# Python basics\n\n## 当前进度\n- 阶段：第 2 / 4 周\n",
+    "goals/active.md": "# Active goals\n\n1. **python-basics** — 卡在第 1 周\n"
+  },
+  "script": [
+    {
+      "op": "write_file",
+      "path": "goals/active.md",
+      "content": "# Active goals\n\n1. **python-basics** — 第 2 / 4 周\n"
+    },
+    {"op": "record_tool", "name": "write_file"}
+  ],
+  "expect": {
+    "files_contain": [
+      {"path": "goals/active.md", "text": "第 2 / 4 周"}
+    ],
+    "tools_used": ["write_file"]
+  },
+  "failure_type_on_fail": "wrong_file"
+}

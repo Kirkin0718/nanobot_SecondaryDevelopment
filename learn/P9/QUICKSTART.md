@@ -115,6 +115,8 @@ nanobot gateway
 
 ---
 
-## 8. 下一步开发
+## 8. 下一步
 
-按 [`implementation-roadmap.md`](./implementation-roadmap.md) 做 PR-1～PR-3；完成后在 [`README.md`](./README.md) 记录进度。
+- **作品演示 / 面试**：[`SHOWCASE.md`](./SHOWCASE.md)
+- **Eval**：`python learn/P9/eval/run_eval.py`
+- 产品 PR 节奏：[`implementation-roadmap.md`](./implementation-roadmap.md)；加深决策：[`NEXT.md`](./NEXT.md)

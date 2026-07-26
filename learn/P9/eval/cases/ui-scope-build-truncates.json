@@ -1,0 +1,19 @@
+{
+  "id": "ui-scope-build-truncates",
+  "prompt": "(ui) buildScopedChatBlock truncates over budget",
+  "tags": ["ui"],
+  "setup": {},
+  "script": [
+    {
+      "op": "scope_build",
+      "limit": 500,
+      "messages": "auto_long",
+      "select_all": true
+    }
+  ],
+  "expect": {
+    "scope_text_max_chars": 500,
+    "scope_truncated": true
+  },
+  "failure_type_on_fail": "ui_contract"
+}

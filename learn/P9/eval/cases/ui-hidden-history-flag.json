@@ -1,0 +1,18 @@
+{
+  "id": "ui-hidden-history-flag",
+  "prompt": "(ui) generate notes must set hiddenHistory",
+  "tags": ["ui"],
+  "setup": {},
+  "script": [
+    {
+      "op": "ui_send",
+      "content": "【教练·生成笔记】...",
+      "hidden_history": true
+    }
+  ],
+  "expect": {
+    "last_send_hidden_history": true,
+    "visible_transcript_excludes": ["【教练·生成笔记】"]
+  },
+  "failure_type_on_fail": "ui_contract"
+}

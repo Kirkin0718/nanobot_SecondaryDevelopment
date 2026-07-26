@@ -1,0 +1,23 @@
+{
+  "id": "capture-inbox-todo",
+  "prompt": "记一下：明天交周报",
+  "tags": ["capture"],
+  "setup": {},
+  "script": [
+    {"op": "ensure_dir", "path": "inbox"},
+    {
+      "op": "write_file",
+      "path": "inbox/2026-07-26.md",
+      "content": "# Inbox 2026-07-26\n\n- [ ] 09:00 明天交周报\n"
+    },
+    {"op": "record_tool", "name": "write_file"}
+  ],
+  "expect": {
+    "files_contain": [
+      {"path": "inbox/2026-07-26.md", "text": "周报"},
+      {"path": "inbox/2026-07-26.md", "text": "- [ ]"}
+    ],
+    "tools_used": ["write_file"]
+  },
+  "failure_type_on_fail": "wrong_file"
+}

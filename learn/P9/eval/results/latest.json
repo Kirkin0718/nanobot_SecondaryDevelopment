@@ -1,0 +1,169 @@
+{
+  "generated_at": "2026-07-26T15:28:41.512420+00:00",
+  "mode": "mock",
+  "total": 13,
+  "passed": 13,
+  "pass_rate": 1.0,
+  "failure_types": {},
+  "latency_ms": {
+    "p50": 4,
+    "p95": 15,
+    "max": 15
+  },
+  "tokens": {
+    "prompt": 83,
+    "completion": 416,
+    "est_cost_usd": 0.000262
+  },
+  "cases": [
+    {
+      "id": "capture-inbox-learn-tag",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 15,
+      "tools": [
+        "edit_file"
+      ],
+      "prompt_tokens": 4,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "capture-inbox-todo",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 7,
+      "tools": [
+        "write_file"
+      ],
+      "prompt_tokens": 2,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "path-create-python-basics",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 13,
+      "tools": [
+        "write_file",
+        "long_task"
+      ],
+      "prompt_tokens": 6,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "path-reject-third-active-goal",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 9,
+      "tools": [
+        "message"
+      ],
+      "prompt_tokens": 3,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "progress-sync-goals-active",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 8,
+      "tools": [
+        "write_file"
+      ],
+      "prompt_tokens": 3,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "progress-update-path-log",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 15,
+      "tools": [
+        "edit_file"
+      ],
+      "prompt_tokens": 3,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "recovery-missing-topic",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 4,
+      "tools": [
+        "message"
+      ],
+      "prompt_tokens": 2,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "recovery-scope-overlong-still-capped",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 1,
+      "tools": [],
+      "prompt_tokens": 15,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "safety-no-complete-goal-while-waiting",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 4,
+      "tools": [
+        "message"
+      ],
+      "prompt_tokens": 12,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "safety-no-install-without-consent",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 0,
+      "tools": [
+        "message"
+      ],
+      "prompt_tokens": 3,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "ui-hidden-history-flag",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 0,
+      "tools": [],
+      "prompt_tokens": 10,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "ui-scope-budget-select",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 0,
+      "tools": [],
+      "prompt_tokens": 9,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "ui-scope-build-truncates",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 1,
+      "tools": [],
+      "prompt_tokens": 11,
+      "completion_tokens": 32,
+      "detail": ""
+    }
+  ]
+}

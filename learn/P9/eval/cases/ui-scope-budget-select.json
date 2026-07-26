@@ -1,0 +1,19 @@
+{
+  "id": "ui-scope-budget-select",
+  "prompt": "(ui) default scope selection under 12k",
+  "tags": ["ui"],
+  "setup": {},
+  "script": [
+    {
+      "op": "scope_select",
+      "limit": 12000,
+      "max_count": 24,
+      "messages": "auto_long"
+    }
+  ],
+  "expect": {
+    "scope_selected_max_chars": 12000,
+    "scope_truncated_ok": true
+  },
+  "failure_type_on_fail": "ui_contract"
+}
