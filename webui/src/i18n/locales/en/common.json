@@ -1,4 +1,4 @@
-﻿{
+{
   "app": {
     "brand": "nanobot",
     "loading": {
@@ -1039,6 +1039,8 @@
         "emptyPreview": "Nothing to preview yet.",
         "pickScope": "Pick chat scope",
         "scopeTitle": "Selected {{count}} messages",
+        "scopeTruncated": "Prompt will use {{used}}/{{selected}} selected messages (cap {{limit}} chars).",
+        "scopeTruncatedNote": "(Scope truncated to {{limit}} characters for the model prompt.)",
         "selectAll": "All",
         "clearAll": "None",
         "scopeEmpty": "No chat messages to select yet.",
