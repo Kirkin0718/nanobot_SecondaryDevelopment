@@ -1,0 +1,114 @@
+concept笔记：
+Nanobot 的核心其实只有一个很小的 Agent 循环（Core Agent Loop），不同的入口最终都会进入这一个循环。
+
+一、runtime shape
+Agent Loop 完成五件事情：
+① 收集上下文(Context)
+② 找到当前Session
+③ 调用LLM
+④ 如果需要执行Tool
+⑤ 返回最终回复
+
+Provider是模型提供商
+不同模型的区别只是http请求格式不同，agent并不知道自己具体调用的模型
+
+channel是输入输出接口
+它们最终都会产生：User Message，然后发送给 Agent。
+因此：Channel 不负责推理，只负责接收和发送信息
+
+tool是Agent能调用的能力，LLM 并不能直接运行 Python，真正流程是：
+LLM
+↓
+Tool Call(JSON)
+↓
+Python执行
+↓
+返回结果
+↓
+LLM继续思考
+所以 Tool 是LLM 与现实世界通信的桥梁。
+
+memory是agent的长期记忆。
+
+Gateway是整个系统长期运行的后台服务。
+
+二、config vs workspace
+
+config是配置，是agent可以使用的（?）是一种能力
+workspace是agent的工作目录，是agent已经做过的事情，是一种状态
+
+三、one agent turn
+
+用户发送消息
+    │
+    ▼
+Channel Layer (例如 Telegram)
+    │ 1. 通道收到消息
+    │ 2. 验证权限 (is_allowed)
+    ▼
+Message Bus (Inbound)
+    │ 3. 转换为 InboundMessage
+    │ 4. 发布到消息队列
+    ▼
+Agent Loop
+    │ 5. 从队列消费消息
+    │ 6. 获取/创建会话
+    ▼
+Context Builder
+    │ 7. 构建完整上下文
+    │   - 历史消息
+    │   - 记忆内容
+    │   - 技能
+    ▼
+LLM Provider
+    │ 8. 调用大语言模型
+    │ 9. 获取响应
+    ▼
+    ┌────┴────┐
+    │       			   │
+有工具调用             无工具调用
+    │       			   │
+    ▼         		   ▼
+Tool        		   Message Bus
+Registry   		    (Outbound)
+    │          	           │
+    ▼          	           ▼
+Execute             Channel Layer
+ Tool       		 (发送回复给用户)
+    │
+    └─────────────▶ (回到第8步，继续循环)
+
+四、CLI、Gateway、API、WebUI
+不同入口，对应不同命令，介绍了不同用途
+
+五、提供商和模型选择
+1.若预设了提供商，则使用
+2.若未预设（即为默认auto），nanobot尝试从其他位置寻找提供商
+3.OAuth提供商需要显式登录并在活动内选择
+
+六、渠道和会话
+不同的会话间的消息不互通
+agents.defaults.unifiedSession开关可以控制
+
+七、记忆、会话和Dream
+memory与sessions位于不同位置和用途
+
+八、tool与安全
+介绍常见工具组
+安全控制项configuration.md#security
+
+九、后台任务
+当 nanobot gateway 启动时，它会运行工作区范围的自动化并注册系统任务：
+dream，当 agents.defaults.dream.enabled 为 true 时；
+heartbeat，当 gateway.heartbeat.enabled 为 true 时。
+
+Heartbeat 读取 <workspace>/HEARTBEAT.md。如果该文件在 ## Active Tasks 下有任务，nanobot 会执行这些任务，并仅将有用/可操作的结果发送到最近活跃的聊天目标。常规的“无变化”结果会被抑制。
+
+用户创建的提醒使用相同的定时任务服务，但与受保护的心跳系统任务不同。它们会在其来源聊天/会话中按计划执行轮次，并通常将结果传回该渠道。
+
+本地触发器也与会话绑定，但它们没有自己的调度。从目标聊天中使用 /trigger <name> 创建触发器，然后当本地脚本或外部服务希望 nanobot 在该会话中响应时，调用 nanobot trigger <id> "<message>"。Webhook 服务器、第三方认证和事件到消息的格式化保持在 nanobot 之外。触发器投递会存储在工作区中，直到关联的 Agent 轮次成功完成。如果目标会话正忙，触发器会等待该会话空闲，而不是被注入到当前活动的轮次中。该消息会作为该会话中的一次自动化轮次被记录。投递是至少一次（at-least-once）的，因此外部系统应容忍重复的触发器消息；已到达 Agent 但失败的投递会被标记为失败，而不是无限重试。
+
+这个地方有些复杂，还需要理解
+
+
+
