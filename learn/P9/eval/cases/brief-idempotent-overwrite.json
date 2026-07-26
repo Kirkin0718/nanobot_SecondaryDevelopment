@@ -1,0 +1,38 @@
+{
+  "id": "brief-idempotent-overwrite",
+  "prompt": "今日简报（再跑一次）",
+  "tags": ["brief"],
+  "setup": {
+    "briefs/2026-07-26-morning.md": "# 晨间简报 2026-07-26\n\n## 今日重点\n\n1. 旧内容\n\n## 长期目标进度\n\n- old\n\n## 昨日碎片归档\n\n- old\n\n## 今日建议动作\n\n1. 旧动作\n",
+    "goals/active.md": "# Active goals\n\n1. **python-basics** — 进行中\n"
+  },
+  "script": [
+    {
+      "op": "write_brief",
+      "date": "2026-07-26",
+      "focus": ["新重点 A"],
+      "goals": ["**[学习] python-basics**: 阶段 1/4 — 已刷新"],
+      "archive": ["无待归档"],
+      "actions": ["继续 Today 第一项"]
+    },
+    {
+      "op": "write_brief",
+      "date": "2026-07-26",
+      "focus": ["新重点 B"],
+      "goals": ["**[学习] python-basics**: 阶段 1/4 — 二次覆盖"],
+      "archive": ["无待归档"],
+      "actions": ["复盘昨日 log"]
+    },
+    {"op": "validate_brief", "date": "2026-07-26"}
+  ],
+  "expect": {
+    "brief_valid": "briefs/2026-07-26-morning.md",
+    "files_contain": [
+      {"path": "briefs/2026-07-26-morning.md", "text": "新重点 B"},
+      {"path": "briefs/2026-07-26-morning.md", "text": "二次覆盖"}
+    ],
+    "brief_writes": 2,
+    "tools_used": ["write_file"]
+  },
+  "failure_type_on_fail": "wrong_file"
+}

@@ -18,6 +18,7 @@
 | [`eval/README.md`](./eval/README.md) | Eval harness（通过率 / 失败类型 / 延迟 / token） |
 | [`retrospective-agent.md`](./retrospective-agent.md) | 机制复盘 + 简历 bullet |
 | [`NEXT.md`](./NEXT.md) | 有数据后再加深的决策板 |
+| [`brief-ops.md`](./brief-ops.md) | **晨间简报幂等/通知契约（PR-3）** |
 | [`QUICKSTART.md`](./QUICKSTART.md) | **10 分钟上手** |
 | [`SAFEGUARDS.md`](./SAFEGUARDS.md) | 安全与体验护栏（禁止擅自安装等） |
 | [`product-spec.md`](./product-spec.md) | 产品定位、用户故事、验收指标 |
@@ -65,13 +66,14 @@
 
 | 日期 | 选题 | PR/分支 | 状态 |
 |------|------|---------|------|
-| 2026-07-26 | 简历级收束：SHOWCASE + architecture + eval + 复盘 | `learn/P9/*` | 完成；eval mock **13/13**；见 [`SHOWCASE.md`](./SHOWCASE.md) |
+| 2026-07-26 | PR-3 晨间简报契约 + brief eval | `brief-ops.md` + `eval/cases/brief-*` | mock **17/17**；见 [`brief-ops.md`](./brief-ops.md) |
+| 2026-07-26 | 简历级收束：SHOWCASE + architecture + eval + 复盘 | `learn/P9/*` | 完成；见 [`SHOWCASE.md`](./SHOWCASE.md) |
 | 2026-07-26 | 迭代 A：Coach TTL / 笔记序列化防抖 / Scope 12k | [#1](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/1) [#2](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/2) [#3](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/3) → `main` | 三阶段完成；维护见 [`iteration-a/`](./iteration-a/) |
 | 2026-07-25 | WebUI 动线工作台 + P0～P2 收口 | — | 已落地；回顾见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md) |
 | 2026-07-24 | Coach UI chips + panel | — | 接线完成：buttons 全链路、GoalCoachPanel→抽屉拆分、coach API、Skill |
 | | PR-1 捕获+目录 | | 已演示 |
 | | PR-2 目标联动 | | 进行中（Skill 已强化） |
-| | PR-3 晨间简报 | | 待开始 |
+| | PR-3 晨间简报 | | 契约+eval 完成（[`brief-ops.md`](./brief-ops.md)）；live 简报仍依赖 gateway/heartbeat |
 | | WebUI 选项芯片 + 笔记面板 | | 已演进为动线工作台（需重启 gateway + 重建 webui） |
 
 ## 笔记

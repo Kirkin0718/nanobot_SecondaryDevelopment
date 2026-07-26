@@ -1,0 +1,27 @@
+{
+  "id": "brief-quiet-when-empty",
+  "prompt": "(heartbeat) morning brief with empty workspace",
+  "tags": ["brief"],
+  "setup": {
+    "goals/active.md": "# Active goals\n\n(none yet)\n",
+    "inbox/2026-07-26.md": "# Inbox\n\n"
+  },
+  "script": [
+    {
+      "op": "write_brief",
+      "date": "2026-07-26",
+      "focus": ["暂无强制事项"],
+      "goals": ["无 active 长期目标"],
+      "archive": ["无待归档"],
+      "actions": ["需要时说「建学习路径」"]
+    },
+    {"op": "brief_notify_decision"},
+    {"op": "validate_brief", "date": "2026-07-26"}
+  ],
+  "expect": {
+    "brief_valid": "briefs/2026-07-26-morning.md",
+    "notify": false,
+    "tools_forbidden": ["message"]
+  },
+  "failure_type_on_fail": "assert_error"
+}

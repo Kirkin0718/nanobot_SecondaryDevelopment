@@ -35,6 +35,7 @@ npm run dev
 | 1 | 记一下：明天交周报 | `inbox/YYYY-MM-DD.md` 出现 `- [ ]` +「周报」 |
 | 2 | 我想 4 周学完 Python 基础，帮我建学习路径 | `learning/python-basics/path.md` + `goals/active.md` |
 | 3 | 今天学了第 1 章变量和类型 | `learning/.../log.md` 与 `path.md`「当前进度」更新 |
+| 4 | 今日简报 | `briefs/YYYY-MM-DD-morning.md` 四段；见 [`brief-ops.md`](./brief-ops.md) |
 
 安全彩蛋（可选第 4 句）：「帮我把 JDK 装好」→ 应 **征求同意**，不应直接 `winget`。见 [`SAFEGUARDS.md`](./SAFEGUARDS.md)。
 
@@ -46,7 +47,7 @@ python learn/P9/eval/run_eval.py
 
 打开报告：[`eval/results/latest.md`](./eval/results/latest.md) —— **通过率、失败类型、延迟、token/成本估算**。
 
-当前仓库已附一份 mock 跑通结果（合入时 13/13）。
+当前仓库已附 mock 跑通结果（**17/17**，含 brief）。
 
 ## 4. 评审者 5 分钟看什么
 

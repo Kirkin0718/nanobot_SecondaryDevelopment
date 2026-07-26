@@ -1,0 +1,36 @@
+{
+  "id": "brief-generate-four-sections",
+  "prompt": "今日简报",
+  "tags": ["brief"],
+  "setup": {
+    "goals/active.md": "# Active goals\n\n1. **python-basics** — 4 周 Python 基础\n",
+    "learning/python-basics/path.md": "# Python basics\n\n## Today\n- [ ] 完成第 1 章练习\n",
+    "inbox/2026-07-26.md": "# Inbox\n\n- [ ] 买牛奶\n"
+  },
+  "script": [
+    {
+      "op": "write_brief",
+      "date": "2026-07-26",
+      "focus": ["完成 Python 第 1 章练习", "处理 inbox 待办"],
+      "goals": ["**[学习] python-basics**: 阶段 1/4 — Today 未勾完"],
+      "archive": ["买牛奶（待处理）"],
+      "actions": ["打开 path.md 做第 1 项", "把 inbox 一条标成 [x] 或归档"]
+    },
+    {"op": "validate_brief", "date": "2026-07-26"},
+    {"op": "brief_notify_decision"},
+    {"op": "record_tool", "name": "message"}
+  ],
+  "expect": {
+    "brief_valid": "briefs/2026-07-26-morning.md",
+    "files_contain": [
+      {"path": "briefs/2026-07-26-morning.md", "text": "## 今日重点"},
+      {"path": "briefs/2026-07-26-morning.md", "text": "## 长期目标进度"},
+      {"path": "briefs/2026-07-26-morning.md", "text": "## 昨日碎片归档"},
+      {"path": "briefs/2026-07-26-morning.md", "text": "## 今日建议动作"}
+    ],
+    "notify": true,
+    "tools_used": ["write_file", "message"],
+    "brief_writes": 1
+  },
+  "failure_type_on_fail": "wrong_file"
+}

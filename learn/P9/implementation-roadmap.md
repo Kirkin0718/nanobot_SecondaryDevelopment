@@ -80,18 +80,21 @@ long-goal、path.md、goals/active.md 三者一致；停滞有提醒。
 
 ### 任务清单
 
-- [ ] 安装 Skill：`morning-brief`
-- [ ] 部署 `HEARTBEAT.example.md` → workspace `HEARTBEAT.md`
-- [ ] （可选）cron 固定 7:30 推送：`cron(action="add", message="运行 morning-brief", cron_expr="30 7 * * *", tz="Asia/Shanghai")`
+- [x] 安装 Skill：`morning-brief`（`install.ps1`）
+- [x] 部署 `HEARTBEAT.example.md` → workspace `HEARTBEAT.md`
+- [x] 幂等与通知契约文档：[`brief-ops.md`](./brief-ops.md)
+- [x] Eval：`brief-*`（四段结构 / 覆盖幂等 / 空场景安静 / 禁安装）
+- [ ] （可选）cron 固定 7:30 推送
 - [ ] （可选）`prompts/dream.md` 从 dream-coach.example.md 定制
-- [ ] 确认 config：`gateway.heartbeat.enabled=true`，`agents.defaults.dream.enabled=true`
+- [ ] 确认本机 config：`gateway.heartbeat.enabled=true`，`agents.defaults.dream.enabled=true`
 
 ### 自测
 
 ```text
 1. inbox 有未归档条目 + path 有进度 → 生成 briefs/YYYY-MM-DD-morning.md
 2. 简报含四段：今日重点 / 长期目标 / 昨日归档摘要 / 今日动作
-3. Dream 跑后 inbox 条目被标记或写入 MEMORY/log
+3. python learn/P9/eval/run_eval.py → brief-* PASS
+4. （可选）Dream 跑后 inbox 条目被标记或写入 MEMORY/log
 ```
 
 ### config 参考
@@ -118,9 +121,9 @@ long-goal、path.md、goals/active.md 三者一致；停滞有提醒。
 | 日期 | PR | 分支 | 状态 | 备注 |
 |------|-----|------|------|------|
 | 2026-07-23 | — | — | 落地包已写 | 待开始 PR-1 |
-| | PR-1 | | | |
-| | PR-2 | | | |
-| | PR-3 | | | |
+| 2026-07-26 | PR-3 | main | 契约+mock eval | [`brief-ops.md`](./brief-ops.md)；17/17 |
+| | PR-1 | | 已演示 | |
+| | PR-2 | | 进行中 | Skill 已强化 |
 
 ---
 

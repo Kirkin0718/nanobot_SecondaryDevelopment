@@ -52,3 +52,5 @@ See files under `cases/*.json`:
 
 Mock mode validates **orchestration + file side effects + policy gates** with zero token cost.
 Live mode is for latency/token samples once API keys exist; do not block CI on live.
+
+Brief cases (`brief-*`) encode PR-3 idempotency + notify-quiet rules — see [`../brief-ops.md`](../brief-ops.md).

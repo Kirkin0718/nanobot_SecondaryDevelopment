@@ -26,6 +26,15 @@ RESULTS_DIR = EVAL_ROOT / "results"
 
 # Allow `python learn/P9/eval/run_eval.py` without PYTHONPATH hacks.
 sys.path.insert(0, str(EVAL_ROOT))
+from brief_schema import (  # noqa: E402
+    brief_path_for,
+    count_unprocessed_inbox,
+    has_active_goals,
+    path_has_today_items,
+    render_brief,
+    should_notify_user,
+    validate_brief_markdown,
+)
 from scope_budget import (  # noqa: E402
     NOTES_SCOPE_CHAR_LIMIT,
     build_scoped_chat_block,
@@ -60,6 +69,8 @@ class Workspace:
         self.visible_transcript: list[str] = []
         self.scope_result: dict[str, Any] | None = None
         self.selected_ids: set[str] | None = None
+        self.notify: bool | None = None
+        self.brief_writes: int = 0
 
     def abspath(self, rel: str) -> Path:
         p = (self.root / rel).resolve()
@@ -138,6 +149,43 @@ def run_script(ws: Workspace, script: list[dict[str, Any]]) -> None:
             ws.last_send = {"content": content, "hidden_history": hidden}
             if not hidden:
                 ws.visible_transcript.append(content)
+        elif op == "write_brief":
+            date = step.get("date", "2026-07-26")
+            rel = brief_path_for(date)
+            text = render_brief(
+                date=date,
+                focus=list(step.get("focus") or ["推进今日学习一步"]),
+                goals=list(step.get("goals") or ["**[学习] demo**: 阶段 1/4 — 进行中"]),
+                archive=list(step.get("archive") or ["无待归档"]),
+                actions=list(step.get("actions") or ["打开 path.md 完成 Today 第一项"]),
+            )
+            if step.get("content"):
+                text = str(step["content"])
+            ws.write(rel, text)
+            ws.brief_writes += 1
+            ws.tools.append("write_file")
+        elif op == "validate_brief":
+            rel = step.get("path") or brief_path_for(step.get("date", "2026-07-26"))
+            missing = validate_brief_markdown(ws.read(rel))
+            if missing:
+                raise AssertionError(f"brief missing: {missing}")
+        elif op == "brief_notify_decision":
+            goals = ws.read(step.get("goals_path", "goals/active.md")) if (
+                ws.abspath(step.get("goals_path", "goals/active.md")).exists()
+            ) else ""
+            inbox = ""
+            inbox_path = step.get("inbox_path", "inbox/2026-07-26.md")
+            if ws.abspath(inbox_path).exists():
+                inbox = ws.read(inbox_path)
+            path_text = ""
+            path_rel = step.get("path_md", "learning/python-basics/path.md")
+            if ws.abspath(path_rel).exists():
+                path_text = ws.read(path_rel)
+            ws.notify = should_notify_user(
+                has_active_goals=has_active_goals(goals),
+                unprocessed_inbox=count_unprocessed_inbox(inbox),
+                has_path_today=path_has_today_items(path_text),
+            )
         else:
             raise ValueError(f"unknown op: {op}")
 
@@ -204,6 +252,24 @@ def check_expect(ws: Workspace, expect: dict[str, Any]) -> None:
     for needle in expect.get("visible_transcript_excludes") or []:
         if any(needle in line for line in ws.visible_transcript):
             raise AssertionError(f"visible transcript contains {needle!r}")
+
+    if "brief_valid" in expect:
+        rel = expect["brief_valid"]
+        missing = validate_brief_markdown(ws.read(rel))
+        if missing:
+            raise AssertionError(f"brief invalid: {missing}")
+
+    if "notify" in expect:
+        if ws.notify is None:
+            raise AssertionError("notify decision not computed")
+        if bool(ws.notify) != bool(expect["notify"]):
+            raise AssertionError(f"notify={ws.notify} expected {expect['notify']}")
+
+    if "brief_writes" in expect:
+        if ws.brief_writes != int(expect["brief_writes"]):
+            raise AssertionError(
+                f"brief_writes={ws.brief_writes} expected {expect['brief_writes']}"
+            )
 
 
 def run_case(case: dict[str, Any]) -> TurnLog:

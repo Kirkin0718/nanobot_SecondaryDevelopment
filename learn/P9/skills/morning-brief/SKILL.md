@@ -13,7 +13,9 @@ Use when:
 
 ## Output
 
-Write **`briefs/YYYY-MM-DD-morning.md`** (workspace local date). If file already exists for today, **update** it (idempotent run).
+Write **`briefs/YYYY-MM-DD-morning.md`** (workspace local date).
+
+**Idempotency**: If the file already exists for today, **overwrite/update** it (same path, single file). Do not create `briefs/...-morning-2.md`. HEARTBEAT must not re-notify within ~1 hour when the file is already fresh — see [`brief-ops.md`](../../brief-ops.md).
 
 **Keep total length readable in ≤ 3 minutes** (~300–500 Chinese characters or equivalent).
 

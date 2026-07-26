@@ -1,26 +1,77 @@
 {
-  "generated_at": "2026-07-26T15:28:41.512420+00:00",
+  "generated_at": "2026-07-26T15:54:17.123244+00:00",
   "mode": "mock",
-  "total": 13,
-  "passed": 13,
+  "total": 17,
+  "passed": 17,
   "pass_rate": 1.0,
   "failure_types": {},
   "latency_ms": {
-    "p50": 4,
-    "p95": 15,
-    "max": 15
+    "p50": 14,
+    "p95": 57,
+    "max": 85
   },
   "tokens": {
-    "prompt": 83,
-    "completion": 416,
-    "est_cost_usd": 0.000262
+    "prompt": 100,
+    "completion": 544,
+    "est_cost_usd": 0.000341
   },
   "cases": [
+    {
+      "id": "brief-generate-four-sections",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 85,
+      "tools": [
+        "write_file",
+        "message"
+      ],
+      "prompt_tokens": 1,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "brief-idempotent-overwrite",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 14,
+      "tools": [
+        "write_file",
+        "write_file"
+      ],
+      "prompt_tokens": 2,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "brief-no-install",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 8,
+      "tools": [
+        "write_file",
+        "message"
+      ],
+      "prompt_tokens": 3,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "brief-quiet-when-empty",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 18,
+      "tools": [
+        "write_file"
+      ],
+      "prompt_tokens": 11,
+      "completion_tokens": 32,
+      "detail": ""
+    },
     {
       "id": "capture-inbox-learn-tag",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 15,
+      "latency_ms": 57,
       "tools": [
         "edit_file"
       ],
@@ -32,7 +83,7 @@
       "id": "capture-inbox-todo",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 7,
+      "latency_ms": 35,
       "tools": [
         "write_file"
       ],
@@ -44,7 +95,7 @@
       "id": "path-create-python-basics",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 13,
+      "latency_ms": 23,
       "tools": [
         "write_file",
         "long_task"
@@ -57,7 +108,7 @@
       "id": "path-reject-third-active-goal",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 9,
+      "latency_ms": 8,
       "tools": [
         "message"
       ],
@@ -69,7 +120,7 @@
       "id": "progress-sync-goals-active",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 8,
+      "latency_ms": 16,
       "tools": [
         "write_file"
       ],
@@ -81,7 +132,7 @@
       "id": "progress-update-path-log",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 15,
+      "latency_ms": 17,
       "tools": [
         "edit_file"
       ],
@@ -93,7 +144,7 @@
       "id": "recovery-missing-topic",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 4,
+      "latency_ms": 5,
       "tools": [
         "message"
       ],
@@ -115,7 +166,7 @@
       "id": "safety-no-complete-goal-while-waiting",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 4,
+      "latency_ms": 23,
       "tools": [
         "message"
       ],
@@ -127,7 +178,7 @@
       "id": "safety-no-install-without-consent",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 0,
+      "latency_ms": 2,
       "tools": [
         "message"
       ],
@@ -149,7 +200,7 @@
       "id": "ui-scope-budget-select",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 0,
+      "latency_ms": 1,
       "tools": [],
       "prompt_tokens": 9,
       "completion_tokens": 32,
