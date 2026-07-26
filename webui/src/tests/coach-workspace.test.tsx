@@ -103,6 +103,53 @@ describe("rich-notes markdown", () => {
   });
 });
 
+describe("useCoachState", () => {
+  beforeEach(() => {
+    vi.mocked(api.fetchCoachState).mockReset();
+  });
+
+  it("dedupes soft refresh within TTL and refetches when forced", async () => {
+    vi.mocked(api.fetchCoachState).mockResolvedValue({
+      active: true,
+      topic: "java-basics",
+      paths: { notes: "learning/java-basics/notes.md" },
+      progress: { done: 0, total: 0, ratio: 0, stage_label: "" },
+      notes: "",
+      log_tail: "",
+      checked_in_today: false,
+      checkin_days: [],
+      today: "2026-07-24",
+    });
+
+    let hook: ReturnType<typeof useCoachState> | null = null;
+    function Probe() {
+      hook = useCoachState("websocket:chat-ttl");
+      return null;
+    }
+
+    render(
+      <ClientProvider
+        client={fakeClient() as unknown as import("@/lib/nanobot-client").NanobotClient}
+        token="tok"
+      >
+        <Probe />
+      </ClientProvider>,
+    );
+
+    await waitFor(() => {
+      expect(hook?.coach).not.toBeNull();
+    });
+    const callsAfterMount = vi.mocked(api.fetchCoachState).mock.calls.length;
+
+    await hook!.refresh();
+    await hook!.refresh();
+    expect(vi.mocked(api.fetchCoachState).mock.calls.length).toBe(callsAfterMount);
+
+    await hook!.refresh({ force: true });
+    expect(vi.mocked(api.fetchCoachState).mock.calls.length).toBe(callsAfterMount + 1);
+  });
+});
+
 describe("JourneyStrip", () => {
   it("shows goal choice chips when no active goal", () => {
     const onGoalChoice = vi.fn();
