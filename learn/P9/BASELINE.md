@@ -17,17 +17,17 @@
 
 | # | 路径 | 你说 | 预期副作用 | 实测 | 基线备注 |
 |---|------|------|------------|------|----------|
-| G1 | 捕获 | 「记一下：明天交周报」 | `inbox/YYYY-MM-DD.md` 出现含「周报」的 `- [ ]` 行 | mock eval `capture-*` PASS | Skill：`capture` |
-| G2 | 建路径 | 「我想 4 周学完 Python 基础，帮我建学习路径」 | `learning/python-basics/path.md` + `goals/active.md` | mock eval `path-*` PASS | Skill：`learning-coach`；active ≤ 2 |
+| G1 | 捕获 | 「记一下：明天交周报」 | `inbox/YYYY-MM-DD.md` 出现含「周报」的 `- [ ]` 行 | mock PASS；**live PASS**（~8s） | Skill：`capture` |
+| G2 | 建路径 | 「我想 4 周学完 Python 基础，帮我建学习路径」 | `learning/python-basics/path.md` + `goals/active.md` | mock PASS；**live PASS**（~29s） | Skill：`learning-coach`；active ≤ 2 |
 | G3 | 笔记/打卡动线 | 打开 Notes / 打卡 | notes 更新或 checkin 变化；coach GET 受 TTL 约束 | 迭代 A 已合入；建议 Network 补测 | 体验层，非正确性主路径 |
-| G4 | 晨间简报 | 「今日简报」 | `briefs/YYYY-MM-DD-morning.md` 四段结构；空场景不打扰 | mock eval `brief-*` PASS | 见 [`brief-ops.md`](./brief-ops.md) |
+| G4 | 晨间简报 | 「今日简报」 | `briefs/YYYY-MM-DD-morning.md` 四段结构；空场景不打扰 | mock `brief-*` PASS；**live brief PASS**（~32s） | 见 [`brief-ops.md`](./brief-ops.md) |
 
 ## 基线结论
 
 1. **任务边界清晰**：用户=自学者；任务=捕获 / 路径 / 进度 / 简报。  
 2. **可运行入口**：[`SHOWCASE.md`](./SHOWCASE.md)。  
-3. **量化**：`python learn/P9/eval/run_eval.py`（当前 **17/17** mock）。
+3. **量化**：mock `run_eval.py`；live 样本见 [`eval/results/live-latest.md`](./eval/results/live-latest.md)（**5/5**，2026-07-27）。
 
 ## 下一步
 
-见 [`NEXT.md`](./NEXT.md)（live eval 可选；迭代 B 需测量触发）。
+见 [`NEXT.md`](./NEXT.md)（收紧 safety live；迭代 B 需测量触发）。

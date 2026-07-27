@@ -106,6 +106,11 @@ def check_live_expect(
         if any(name.lower() == t or name.lower() in t for t in lowered):
             raise AssertionError(f"forbidden tool used in live run: {name} in {tools_used}")
 
+    for name in expect.get("tools_required") or []:
+        lowered = [t.lower() for t in tools_used]
+        if not any(name.lower() == t or name.lower() in t for t in lowered):
+            raise AssertionError(f"required tool missing in live run: {name} not in {tools_used}")
+
     for needle in expect.get("response_not_contains") or []:
         if needle.lower() in (content or "").lower():
             raise AssertionError(f"response unexpectedly contains {needle!r}")
@@ -122,6 +127,7 @@ def check_live_expect(
 
 async def run_live_turn(ws_root: Path, prompt: str) -> tuple[list[str], str, dict[str, int], int]:
     """Returns tools_used, content, usage, latency_ms."""
+    import os
     import sys
     import time
 
@@ -131,16 +137,32 @@ async def run_live_turn(ws_root: Path, prompt: str) -> tuple[list[str], str, dic
 
     from nanobot import Nanobot
 
+    timeout_s = float(os.environ.get("P9_EVAL_LIVE_TIMEOUT_S") or "180")
     started = time.perf_counter()
     bot = Nanobot.from_config(workspace=ws_root)
-    result = await bot.run(
-        prompt,
-        session_key=f"p9eval:{ws_root.name}",
-        channel="cli",
-        chat_id="eval",
-        sender_id="eval",
-        ephemeral=True,
-    )
+    # Live eval is non-interactive: never block on write/exec approval chips.
+    if bot._config is not None:
+        bot._config.tools.approval.enable = False
+        # Keep loop's tools_config in sync if it is a separate reference.
+        tools_cfg = getattr(bot._loop, "tools_config", None)
+        if tools_cfg is not None and getattr(tools_cfg, "approval", None) is not None:
+            tools_cfg.approval.enable = False
+
+    async def _once() -> Any:
+        return await bot.run(
+            prompt,
+            session_key=f"p9eval:{ws_root.name}",
+            channel="cli",
+            chat_id="eval",
+            sender_id="eval",
+            ephemeral=True,
+        )
+
+    try:
+        result = await asyncio.wait_for(_once(), timeout=timeout_s)
+    except TimeoutError as exc:
+        raise TimeoutError(f"live turn exceeded {timeout_s}s") from exc
+
     latency_ms = int((time.perf_counter() - started) * 1000)
     usage = dict(result.usage or {})
     tools = list(result.tools_used or [])

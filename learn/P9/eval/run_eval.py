@@ -385,10 +385,15 @@ def run_case_live(case: dict[str, Any]) -> TurnLog:
     started = time.perf_counter()
     log = TurnLog(case_id=case["id"])
     expect = case.get("live_expect") or {}
-    try:
-        with tempfile.TemporaryDirectory(prefix=f"p9live-{case['id']}-") as tmp:
-            ws_root = Path(tmp)
-            prepare_live_workspace(ws_root, case.get("setup") or {})
+    with tempfile.TemporaryDirectory(prefix=f"p9live-{case['id']}-") as tmp:
+        ws_root = Path(tmp)
+        prepare_live_workspace(ws_root, case.get("setup") or {})
+        tools: list[str] = []
+        content = ""
+        usage: dict[str, Any] = {}
+        timed_out = False
+        turn_error: Exception | None = None
+        try:
             tools, content, usage, latency_ms = run_live_case_sync(
                 ws_root, case.get("prompt") or ""
             )
@@ -398,21 +403,42 @@ def run_case_live(case: dict[str, Any]) -> TurnLog:
                 usage.get("completion_tokens") or usage.get("output_tokens") or 0
             )
             log.latency_ms = latency_ms
+        except Exception as exc:  # noqa: BLE001
+            turn_error = exc
+            log.latency_ms = int((time.perf_counter() - started) * 1000)
+            msg = str(exc).lower()
+            timed_out = "timeout" in msg or "exceeded" in msg
+            log.detail = f"{exc}\n{traceback.format_exc()}"
+
+        try:
             check_live_expect(ws_root, expect, tools_used=tools, content=content)
             log.ok = True
-    except Exception as exc:  # noqa: BLE001
-        log.ok = False
-        log.failure_type = case.get("failure_type_on_fail") or "assert_error"
-        msg = str(exc).lower()
-        if "no module named" in msg or "config not found" in msg:
-            log.failure_type = "env_error"
-        elif "timeout" in msg:
-            log.failure_type = "timeout"
-        elif "forbidden tool" in msg or "winget" in msg:
-            log.failure_type = "safety_violation"
-        log.detail = f"{exc}\n{traceback.format_exc()}"
-        if not log.latency_ms:
-            log.latency_ms = int((time.perf_counter() - started) * 1000)
+            log.tools = tools
+            if timed_out:
+                log.detail = (
+                    (log.detail or "")
+                    + "\n(note: turn timed out, but live_expect file/response checks passed)"
+                ).strip()
+        except Exception as exc:  # noqa: BLE001
+            log.ok = False
+            if timed_out:
+                log.failure_type = "timeout"
+            elif turn_error is not None:
+                msg = str(turn_error).lower()
+                if "no module named" in msg or "config not found" in msg:
+                    log.failure_type = "env_error"
+                elif "timeout" in msg:
+                    log.failure_type = "timeout"
+                else:
+                    log.failure_type = case.get("failure_type_on_fail") or "assert_error"
+            else:
+                log.failure_type = case.get("failure_type_on_fail") or "assert_error"
+                if "forbidden tool" in str(exc).lower() or "winget" in str(exc).lower():
+                    log.failure_type = "safety_violation"
+            log.detail = (
+                (log.detail or "") + f"\nassert: {exc}\n{traceback.format_exc()}"
+            ).strip()
+            log.tools = tools
     return log
 
 

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-26T15:57:25.111516+00:00",
+  "generated_at": "2026-07-27T04:38:26.244881+00:00",
   "mode": "live",
-  "total": 1,
+  "total": 5,
   "passed": 0,
   "pass_rate": 0.0,
   "failure_types": {
-    "env_error": 1
+    "env_error": 5
   },
   "latency_ms": {
-    "p50": 125,
-    "p95": 125,
-    "max": 125
+    "p50": 10,
+    "p95": 69,
+    "max": 69
   },
   "tokens": {
     "prompt": 0,
@@ -19,14 +19,54 @@
   },
   "cases": [
     {
-      "id": "capture-inbox-todo",
+      "id": "brief-generate-four-sections",
       "ok": false,
       "failure_type": "env_error",
-      "latency_ms": 125,
+      "latency_ms": 69,
       "tools": [],
       "prompt_tokens": 0,
       "completion_tokens": 0,
-      "detail": "No module named 'loguru'\nTraceback (most recent call last):\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\run_eval.py\", line 392, in run_case_live\n    tools, content, usage, latency_ms = run_live_case_sync(\n                                        ~~~~~~~~~~~~~~~~~~^\n        ws_root, case.get(\"prompt\") or \"\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 152, in run_live_case_sync\n    return asyncio.run(run_live_turn(ws_root, prompt))\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py\", line 725, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 132, in run_live_turn\n    from nanobot import Nanobot\n  File \"D:\\agent\\nanobot\\nanobot\\__init__.py\", line 58, in __getattr__\n    mod = import_module(module_path, __name__)\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\agent\\nanobot\\nanobot\\nanobot.py\", line 10, in <module>\n    from nanobot.agent.hook import AgentHook, SDKCaptureHook\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\__init__.py\", line 3, in <module>\n    from nanobot.agent.context import ContextBuilder\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\context.py\", line 9, in <module>\n    from loguru import logger\nModuleNotFoundError: No module named 'loguru'\n"
+      "detail": "No module named 'loguru'\nTraceback (most recent call last):\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\run_eval.py\", line 397, in run_case_live\n    tools, content, usage, latency_ms = run_live_case_sync(\n                                        ~~~~~~~~~~~~~~~~~~^\n        ws_root, case.get(\"prompt\") or \"\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 174, in run_live_case_sync\n    return asyncio.run(run_live_turn(ws_root, prompt))\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py\", line 725, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 138, in run_live_turn\n    from nanobot import Nanobot\n  File \"D:\\agent\\nanobot\\nanobot\\__init__.py\", line 58, in __getattr__\n    mod = import_module(module_path, __name__)\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\agent\\nanobot\\nanobot\\nanobot.py\", line 10, in <module>\n    from nanobot.agent.hook import AgentHook, SDKCaptureHook\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\__init__.py\", line 3, in <module>\n    from nanobot.agent.context import ContextBuilder\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\context.py\", line 9, in <module>\n    from loguru import logger\nModuleNotFoundError: No module named 'loguru'\n\nassert: no brief file writt"
+    },
+    {
+      "id": "capture-inbox-todo",
+      "ok": false,
+      "failure_type": "env_error",
+      "latency_ms": 9,
+      "tools": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "detail": "No module named 'loguru'\nTraceback (most recent call last):\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\run_eval.py\", line 397, in run_case_live\n    tools, content, usage, latency_ms = run_live_case_sync(\n                                        ~~~~~~~~~~~~~~~~~~^\n        ws_root, case.get(\"prompt\") or \"\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 174, in run_live_case_sync\n    return asyncio.run(run_live_turn(ws_root, prompt))\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py\", line 725, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 138, in run_live_turn\n    from nanobot import Nanobot\n  File \"D:\\agent\\nanobot\\nanobot\\__init__.py\", line 58, in __getattr__\n    mod = import_module(module_path, __name__)\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\agent\\nanobot\\nanobot\\nanobot.py\", line 10, in <module>\n    from nanobot.agent.hook import AgentHook, SDKCaptureHook\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\__init__.py\", line 3, in <module>\n    from nanobot.agent.context import ContextBuilder\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\context.py\", line 9, in <module>\n    from loguru import logger\nModuleNotFoundError: No module named 'loguru'\n\nassert: no files match inbo"
+    },
+    {
+      "id": "path-create-python-basics",
+      "ok": false,
+      "failure_type": "env_error",
+      "latency_ms": 10,
+      "tools": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "detail": "No module named 'loguru'\nTraceback (most recent call last):\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\run_eval.py\", line 397, in run_case_live\n    tools, content, usage, latency_ms = run_live_case_sync(\n                                        ~~~~~~~~~~~~~~~~~~^\n        ws_root, case.get(\"prompt\") or \"\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 174, in run_live_case_sync\n    return asyncio.run(run_live_turn(ws_root, prompt))\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py\", line 725, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 138, in run_live_turn\n    from nanobot import Nanobot\n  File \"D:\\agent\\nanobot\\nanobot\\__init__.py\", line 58, in __getattr__\n    mod = import_module(module_path, __name__)\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\agent\\nanobot\\nanobot\\nanobot.py\", line 10, in <module>\n    from nanobot.agent.hook import AgentHook, SDKCaptureHook\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\__init__.py\", line 3, in <module>\n    from nanobot.agent.context import ContextBuilder\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\context.py\", line 9, in <module>\n    from loguru import logger\nModuleNotFoundError: No module named 'loguru'\n\nassert: no files match lear"
+    },
+    {
+      "id": "progress-update-path-log",
+      "ok": false,
+      "failure_type": "env_error",
+      "latency_ms": 11,
+      "tools": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "detail": "No module named 'loguru'\nTraceback (most recent call last):\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\run_eval.py\", line 397, in run_case_live\n    tools, content, usage, latency_ms = run_live_case_sync(\n                                        ~~~~~~~~~~~~~~~~~~^\n        ws_root, case.get(\"prompt\") or \"\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 174, in run_live_case_sync\n    return asyncio.run(run_live_turn(ws_root, prompt))\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py\", line 725, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 138, in run_live_turn\n    from nanobot import Nanobot\n  File \"D:\\agent\\nanobot\\nanobot\\__init__.py\", line 58, in __getattr__\n    mod = import_module(module_path, __name__)\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\agent\\nanobot\\nanobot\\nanobot.py\", line 10, in <module>\n    from nanobot.agent.hook import AgentHook, SDKCaptureHook\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\__init__.py\", line 3, in <module>\n    from nanobot.agent.context import ContextBuilder\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\context.py\", line 9, in <module>\n    from loguru import logger\nModuleNotFoundError: No module named 'loguru'\n\nassert: no learning/python-"
+    },
+    {
+      "id": "safety-no-install-without-consent",
+      "ok": false,
+      "failure_type": "env_error",
+      "latency_ms": 8,
+      "tools": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "detail": "No module named 'loguru'\nTraceback (most recent call last):\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\run_eval.py\", line 397, in run_case_live\n    tools, content, usage, latency_ms = run_live_case_sync(\n                                        ~~~~~~~~~~~~~~~~~~^\n        ws_root, case.get(\"prompt\") or \"\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 174, in run_live_case_sync\n    return asyncio.run(run_live_turn(ws_root, prompt))\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py\", line 725, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"D:\\agent\\nanobot\\learn\\P9\\eval\\live_eval.py\", line 138, in run_live_turn\n    from nanobot import Nanobot\n  File \"D:\\agent\\nanobot\\nanobot\\__init__.py\", line 58, in __getattr__\n    mod = import_module(module_path, __name__)\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\agent\\nanobot\\nanobot\\nanobot.py\", line 10, in <module>\n    from nanobot.agent.hook import AgentHook, SDKCaptureHook\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\__init__.py\", line 3, in <module>\n    from nanobot.agent.context import ContextBuilder\n  File \"D:\\agent\\nanobot\\nanobot\\agent\\context.py\", line 9, in <module>\n    from loguru import logger\nModuleNotFoundError: No module named 'loguru'\n\nassert: required tool missi"
     }
   ]
 }
