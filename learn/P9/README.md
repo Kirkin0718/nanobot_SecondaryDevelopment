@@ -1,6 +1,6 @@
 # Phase 9：个人办公/学习教练
 
-**状态**：简历级收束已就绪（2026-07-26）——演示 / 机制说明 / eval / 复盘  
+**状态**：简历级收束主线已完成（2026-07-27）；下一步见 [`PHASE6-NEXT-WORK.md`](./PHASE6-NEXT-WORK.md)  
 **作品入口**：[`SHOWCASE.md`](./SHOWCASE.md)  
 **总览**：[`../learning-roadmap.md`](../learning-roadmap.md) § Phase 9
 
@@ -13,6 +13,7 @@
 | 文档 | 说明 |
 |------|------|
 | [`SHOWCASE.md`](./SHOWCASE.md) | **作品演示入口（推荐评审先看）** |
+| [`PHASE6-NEXT-WORK.md`](./PHASE6-NEXT-WORK.md) | **收束完成后的下一步工作清单（Phase 6）** |
 | [`BASELINE.md`](./BASELINE.md) | 作品对齐与黄金路径基线 |
 | [`architecture-agent.md`](./architecture-agent.md) | Agent loop / 工具 / 上下文 / 权限 |
 | [`eval/README.md`](./eval/README.md) | Eval harness（通过率 / 失败类型 / 延迟 / token） |
@@ -66,7 +67,8 @@
 
 | 日期 | 选题 | PR/分支 | 状态 |
 |------|------|---------|------|
-| 2026-07-26 | PR-3 晨间简报契约 + brief eval | `brief-ops.md` + `eval/cases/brief-*` | mock **17/17**；见 [`brief-ops.md`](./brief-ops.md) |
+| 2026-07-27 | 收束计划更新 → Phase 6 下一步 | [`PHASE6-NEXT-WORK.md`](./PHASE6-NEXT-WORK.md) | 主线完成；优先 safety 收紧 + 演示截图 |
+| 2026-07-26 | PR-3 晨间简报契约 + brief eval | `brief-ops.md` + `eval/cases/brief-*` | mock **17/17**；live **5/5** |
 | 2026-07-26 | 简历级收束：SHOWCASE + architecture + eval + 复盘 | `learn/P9/*` | 完成；见 [`SHOWCASE.md`](./SHOWCASE.md) |
 | 2026-07-26 | 迭代 A：Coach TTL / 笔记序列化防抖 / Scope 12k | [#1](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/1) [#2](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/2) [#3](https://github.com/Kirkin0718/nanobot_SecondaryDevelopment/pull/3) → `main` | 三阶段完成；维护见 [`iteration-a/`](./iteration-a/) |
 | 2026-07-25 | WebUI 动线工作台 + P0～P2 收口 | — | 已落地；回顾见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md) |
@@ -79,7 +81,7 @@
 ## 笔记
 
 - **作品评审入口**：[`SHOWCASE.md`](./SHOWCASE.md)；机制复盘：[`retrospective-agent.md`](./retrospective-agent.md)。
+- **下一步（Phase 6）**：[`PHASE6-NEXT-WORK.md`](./PHASE6-NEXT-WORK.md)；决策板：[`NEXT.md`](./NEXT.md)。
 - WebUI 动线、状态同步、性能向二次开发：见 [`retrospective-webui-coach.md`](./retrospective-webui-coach.md)。
 - 迭代 A（性能三切片）调参与排障：见 [`iteration-a/README.md`](./iteration-a/README.md)。
-- 下一步加深（简报 / live eval / 迭代 B）见 [`NEXT.md`](./NEXT.md)。
 - 实现时优先还「coach 单源 + UI 职责」债，再扩 Hub/日历等功能。

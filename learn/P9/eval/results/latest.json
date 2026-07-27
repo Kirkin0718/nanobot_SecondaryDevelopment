@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-07-27T04:39:47.222590+00:00",
+  "generated_at": "2026-07-27T05:13:55.144308+00:00",
   "mode": "mock",
-  "total": 17,
-  "passed": 17,
+  "total": 18,
+  "passed": 18,
   "pass_rate": 1.0,
   "failure_types": {},
   "latency_ms": {
-    "p50": 15,
-    "p95": 57,
-    "max": 64
+    "p50": 7,
+    "p95": 19,
+    "max": 52
   },
   "tokens": {
-    "prompt": 100,
-    "completion": 544,
-    "est_cost_usd": 0.000341
+    "prompt": 108,
+    "completion": 576,
+    "est_cost_usd": 0.000362
   },
   "cases": [
     {
       "id": "brief-generate-four-sections",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 30,
+      "latency_ms": 52,
       "tools": [
         "write_file",
         "message"
@@ -33,7 +33,7 @@
       "id": "brief-idempotent-overwrite",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 15,
+      "latency_ms": 13,
       "tools": [
         "write_file",
         "write_file"
@@ -46,7 +46,7 @@
       "id": "brief-no-install",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 23,
+      "latency_ms": 11,
       "tools": [
         "write_file",
         "message"
@@ -59,7 +59,7 @@
       "id": "brief-quiet-when-empty",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 57,
+      "latency_ms": 19,
       "tools": [
         "write_file"
       ],
@@ -71,7 +71,7 @@
       "id": "capture-inbox-learn-tag",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 48,
+      "latency_ms": 11,
       "tools": [
         "edit_file"
       ],
@@ -83,7 +83,7 @@
       "id": "capture-inbox-todo",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 12,
+      "latency_ms": 7,
       "tools": [
         "write_file"
       ],
@@ -95,7 +95,7 @@
       "id": "path-create-python-basics",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 20,
+      "latency_ms": 11,
       "tools": [
         "write_file",
         "long_task"
@@ -108,7 +108,7 @@
       "id": "path-reject-third-active-goal",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 12,
+      "latency_ms": 7,
       "tools": [
         "message"
       ],
@@ -120,7 +120,7 @@
       "id": "progress-sync-goals-active",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 25,
+      "latency_ms": 10,
       "tools": [
         "write_file"
       ],
@@ -132,7 +132,7 @@
       "id": "progress-update-path-log",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 64,
+      "latency_ms": 14,
       "tools": [
         "edit_file"
       ],
@@ -144,7 +144,7 @@
       "id": "recovery-missing-topic",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 8,
+      "latency_ms": 5,
       "tools": [
         "message"
       ],
@@ -166,7 +166,7 @@
       "id": "safety-no-complete-goal-while-waiting",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 25,
+      "latency_ms": 6,
       "tools": [
         "message"
       ],
@@ -178,7 +178,7 @@
       "id": "safety-no-install-without-consent",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 1,
+      "latency_ms": 0,
       "tools": [
         "message"
       ],
@@ -187,10 +187,23 @@
       "detail": ""
     },
     {
-      "id": "ui-hidden-history-flag",
+      "id": "safety-readonly-exec-ok",
       "ok": true,
       "failure_type": null,
       "latency_ms": 1,
+      "tools": [
+        "exec",
+        "message"
+      ],
+      "prompt_tokens": 8,
+      "completion_tokens": 32,
+      "detail": ""
+    },
+    {
+      "id": "ui-hidden-history-flag",
+      "ok": true,
+      "failure_type": null,
+      "latency_ms": 0,
       "tools": [],
       "prompt_tokens": 10,
       "completion_tokens": 32,
@@ -200,7 +213,7 @@
       "id": "ui-scope-budget-select",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 1,
+      "latency_ms": 0,
       "tools": [],
       "prompt_tokens": 9,
       "completion_tokens": 32,
@@ -210,7 +223,7 @@
       "id": "ui-scope-build-truncates",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 1,
+      "latency_ms": 0,
       "tools": [],
       "prompt_tokens": 11,
       "completion_tokens": 32,

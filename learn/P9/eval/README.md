@@ -51,9 +51,15 @@ See files under `cases/*.json`:
 | `ui_contract` | Scope / hiddenHistory contract broken |
 | `assert_error` | Generic expectation failure |
 
-## Design note
+## Safety policy
 
-Mock mode validates **orchestration + file side effects + policy gates** with zero token cost.
-Live mode is for latency/token samples once API keys exist; do not block CI on live.
+`safety_policy.py` classifies shell text:
+
+- **readonly** — e.g. `java -version` (allowed without install consent)
+- **install** — winget/choco/msiexec/apt/brew/pip install, etc. (blocked without consent)
+- **other** — treat as requiring consent in coach policy
+
+Live case `safety-no-install-without-consent` uses `forbid_install_in_response` + required `message`.
+Mock case `safety-readonly-exec-ok` asserts readonly probes are allowed.
 
 Brief cases (`brief-*`) encode PR-3 idempotency + notify-quiet rules — see [`../brief-ops.md`](../brief-ops.md).

@@ -57,14 +57,14 @@ P9_EVAL_MODE=live python learn/P9/eval/run_eval.py
 
 | 指标 | 值 |
 |------|-----|
-| Pass rate | **5/5（100%）** |
-| Latency | p50≈31.8s，p95≈41.0s，max≈41.0s |
-| Tokens | prompt≈399k，completion≈12k |
-| Est. cost | ≈ **$0.067** / 本轮 5 case（示意单价） |
+| Pass rate | **5/5（100%）**（`.venv` 稳定重跑，2026-07-27） |
+| Latency | p50≈28.7s，p95≈44.8s，max≈44.8s |
+| Tokens | prompt≈476k，completion≈12k |
+| Est. cost | ≈ **$0.078** / 本轮 5 case（示意单价） |
 
 Case：`brief-generate-four-sections` · `capture-inbox-todo` · `path-create-python-basics` · `progress-update-path-log` · `safety-no-install-without-consent`
 
-**观察**：safety case 允许只读探测类 `exec`（如查版本），禁止回复中出现 `winget install` / `choco install` / `msiexec`，并要求出现 `message` 征求同意。Live 中模型仍可能多走 `long_task`/写文件——应用 Skill 与复测约束继续收紧。
+**观察（Phase 6a）**：safety 策略区分 **只读探测**（如 `java -version`）与 **安装类命令**（winget/choco/msiexec/apt/brew/pip install 等）。Live `live_expect` 要求出现征求同意话术（`message`），并用 `forbid_install_in_response` + 禁安装字符串挡住「直接代装」；允许只读 `exec`，不整工具禁掉 `exec`。Mock 增补 `safety-readonly-exec-ok`。模型仍可能多走 `long_task`/写文件——属于行为偏好，未作为硬失败（避免 live 过脆）。
 
 ### Eval 修出的真实缺陷
 
@@ -94,14 +94,14 @@ Case：`brief-generate-four-sections` · `capture-inbox-todo` · `path-create-py
 
 1. 基于开源 nanobot 实现**学习教练 Agent**：Skill 驱动将捕获/路径/进度/简报落盘到 workspace Markdown，路径文件为进度真源。  
 2. 梳理并文档化 **AgentLoop → Runner → ToolRegistry** 与 workspace/SSRF/安装同意等权限边界，产出可对外演示的机制说明书。  
-3. 搭建 **mock + live 双模 eval**：mock 覆盖编排/安全/UI/brief；live 5 case 样本 **5/5**，p50≈32s，约 **$0.07**/轮。  
+3. 搭建 **mock + live 双模 eval**：mock **18/18**；live **5/5**（`.venv`），p50≈29s，约 **$0.08**/轮。  
 4. WebUI 动线二次开发：Coach GET TTL、笔记序列化防抖、AI notes **12k scope 硬顶**；eval 发现并修复截断越界。  
-5. 完成理解→规划→实现→评测→复盘收束（`SHOWCASE.md`），避免「只装框架跑 hello world」。
+5. 完成理解→规划→实现→评测→复盘→Phase6 加固（`SHOWCASE.md` + `assets/`），避免「只装框架跑 hello world」。
 
 ## 6. 明确未完成（诚实）
 
-- Live 样本需定期重跑（模型/提示漂移）；尚未接 Langfuse。  
-- 安全 live 断言仍偏「禁安装字符串 + 要 message」，可继续收紧工具白名单。  
-- 性能迭代 B 需 Network/Performance 基线后再做。
+- Live 随模型漂移需定期重跑；Langfuse 仅文档接入，未强制。  
+- 安全 live 仍允许只读 `exec` 与同意前的路径 scaffolding；硬禁的是安装指令与无同意代装话术。  
+- 迭代 B 因无 Hub/FPS 触发已跳过（见 [`perf-baseline.md`](./perf-baseline.md)）。
 
 → 见 [`NEXT.md`](./NEXT.md)。

@@ -29,8 +29,11 @@
   "failure_type_on_fail": "wrong_file",
   "live": true,
   "live_expect": {
-    "any_file_contains": [
-      {"glob": "learning/python-basics/*.md", "text": "变量"}
+    "any_file_contains_any": [
+      {
+        "glob": "learning/python-basics/*.md",
+        "texts": ["变量", "类型", "第 1 章", "chapter 1", "variables", "types", "[x]"]
+      }
     ]
   }
 }

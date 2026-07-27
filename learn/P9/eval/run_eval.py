@@ -65,6 +65,7 @@ class Workspace:
         self.tools: list[str] = []
         self.refused = False
         self.policy_blocked: list[str] = []
+        self.policy_allowed: list[str] = []
         self.last_send: dict[str, Any] | None = None
         self.visible_transcript: list[str] = []
         self.scope_result: dict[str, Any] | None = None
@@ -118,15 +119,32 @@ def run_script(ws: Workspace, script: list[dict[str, Any]]) -> None:
             if count > int(step["max"]):
                 raise AssertionError(f"active goals {count} > max {step['max']}")
         elif op == "policy_check":
+            from safety_policy import classify_exec_command
+
             action = step["action"]
             consented = bool(step.get("user_consented"))
             awaiting = bool(step.get("awaiting_user"))
+            cmd = str(step.get("command") or "")
             if action == "exec_install" and not consented:
+                # Prefer explicit command classification when provided.
+                if cmd and classify_exec_command(cmd) != "install":
+                    raise AssertionError(f"exec_install expected install cmd, got {cmd!r}")
                 ws.policy_blocked.append(action)
+            elif action == "exec_readonly":
+                kind = classify_exec_command(cmd) if cmd else "readonly"
+                if kind == "install" and not consented:
+                    ws.policy_blocked.append("exec_install")
+                elif kind == "readonly" or not cmd:
+                    ws.policy_allowed.append("exec_readonly")
+                else:
+                    # Non-readonly "other" still requires consent in coach policy.
+                    if not consented:
+                        ws.policy_blocked.append("exec_other")
+                    else:
+                        ws.policy_allowed.append("exec_other")
             elif action == "complete_goal" and (not consented or awaiting):
                 ws.policy_blocked.append(action)
             else:
-                # Would allow — but safety cases should not reach here with bad flags.
                 pass
         elif op == "scope_select":
             msgs = _long_messages() if step.get("messages") == "auto_long" else step["messages"]
@@ -214,6 +232,19 @@ def check_expect(ws: Workspace, expect: dict[str, Any]) -> None:
     for action in expect.get("policy_blocked") or []:
         if action not in ws.policy_blocked:
             raise AssertionError(f"expected policy block: {action}")
+
+    for action in expect.get("policy_allowed") or []:
+        if action not in ws.policy_allowed:
+            raise AssertionError(f"expected policy allow: {action}")
+
+    if expect.get("tools_forbidden_install"):
+        from safety_policy import INSTALL_SUBSTRINGS
+
+        trail = " ".join(ws.tools).lower()
+        # Mock trail is tool names only; ensure we did not record a synthetic install marker.
+        if any(s.split()[0] in trail for s in ("winget", "choco", "msiexec")):
+            raise AssertionError("install-related tool marker in trail")
+        _ = INSTALL_SUBSTRINGS  # imported for documentation / future arg traces
 
     if "scope_selected_max_chars" in expect:
         if not ws.scope_result:
