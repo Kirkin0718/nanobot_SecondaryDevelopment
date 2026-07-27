@@ -32,5 +32,9 @@
     "tools_used": ["write_file", "message"],
     "brief_writes": 1
   },
-  "failure_type_on_fail": "wrong_file"
+  "failure_type_on_fail": "wrong_file",
+  "live": true,
+  "live_expect": {
+    "any_brief_valid": true
+  }
 }

@@ -27,5 +27,12 @@
     ],
     "tools_used": ["write_file", "long_task"]
   },
-  "failure_type_on_fail": "wrong_file"
+  "failure_type_on_fail": "wrong_file",
+  "live": true,
+  "live_expect": {
+    "any_file_contains": [
+      {"glob": "learning/*/path.md", "text": "Python"},
+      {"glob": "goals/active.md", "text": "Python"}
+    ]
+  }
 }

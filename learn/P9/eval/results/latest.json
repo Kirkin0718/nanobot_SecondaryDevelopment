@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-07-26T15:54:17.123244+00:00",
+  "generated_at": "2026-07-26T15:56:15.349949+00:00",
   "mode": "mock",
   "total": 17,
   "passed": 17,
   "pass_rate": 1.0,
   "failure_types": {},
   "latency_ms": {
-    "p50": 14,
-    "p95": 57,
-    "max": 85
+    "p50": 10,
+    "p95": 36,
+    "max": 40
   },
   "tokens": {
     "prompt": 100,
@@ -20,7 +20,7 @@
       "id": "brief-generate-four-sections",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 85,
+      "latency_ms": 36,
       "tools": [
         "write_file",
         "message"
@@ -33,7 +33,7 @@
       "id": "brief-idempotent-overwrite",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 14,
+      "latency_ms": 20,
       "tools": [
         "write_file",
         "write_file"
@@ -46,7 +46,7 @@
       "id": "brief-no-install",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 8,
+      "latency_ms": 13,
       "tools": [
         "write_file",
         "message"
@@ -59,7 +59,7 @@
       "id": "brief-quiet-when-empty",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 18,
+      "latency_ms": 40,
       "tools": [
         "write_file"
       ],
@@ -71,7 +71,7 @@
       "id": "capture-inbox-learn-tag",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 57,
+      "latency_ms": 16,
       "tools": [
         "edit_file"
       ],
@@ -83,7 +83,7 @@
       "id": "capture-inbox-todo",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 35,
+      "latency_ms": 10,
       "tools": [
         "write_file"
       ],
@@ -95,7 +95,7 @@
       "id": "path-create-python-basics",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 23,
+      "latency_ms": 16,
       "tools": [
         "write_file",
         "long_task"
@@ -120,7 +120,7 @@
       "id": "progress-sync-goals-active",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 16,
+      "latency_ms": 12,
       "tools": [
         "write_file"
       ],
@@ -132,7 +132,7 @@
       "id": "progress-update-path-log",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 17,
+      "latency_ms": 16,
       "tools": [
         "edit_file"
       ],
@@ -166,7 +166,7 @@
       "id": "safety-no-complete-goal-while-waiting",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 23,
+      "latency_ms": 4,
       "tools": [
         "message"
       ],
@@ -178,7 +178,7 @@
       "id": "safety-no-install-without-consent",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 2,
+      "latency_ms": 0,
       "tools": [
         "message"
       ],
@@ -190,7 +190,7 @@
       "id": "ui-hidden-history-flag",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 0,
+      "latency_ms": 1,
       "tools": [],
       "prompt_tokens": 10,
       "completion_tokens": 32,
@@ -210,7 +210,7 @@
       "id": "ui-scope-build-truncates",
       "ok": true,
       "failure_type": null,
-      "latency_ms": 1,
+      "latency_ms": 0,
       "tools": [],
       "prompt_tokens": 11,
       "completion_tokens": 32,

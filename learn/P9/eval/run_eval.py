@@ -306,7 +306,7 @@ def percentile(values: list[int], p: float) -> int:
     return ordered[idx]
 
 
-def write_reports(logs: list[TurnLog], mode: str) -> None:
+def write_reports(logs: list[TurnLog], mode: str, *, stem: str = "latest") -> None:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     passed = sum(1 for x in logs if x.ok)
     total = len(logs)
@@ -349,7 +349,7 @@ def write_reports(logs: list[TurnLog], mode: str) -> None:
             for x in logs
         ],
     }
-    (RESULTS_DIR / "latest.json").write_text(
+    (RESULTS_DIR / f"{stem}.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
@@ -375,18 +375,49 @@ def write_reports(logs: list[TurnLog], mode: str) -> None:
         status = "PASS" if x.ok else f"FAIL ({x.failure_type})"
         lines.append(f"- `{x.case_id}`: {status} — {x.latency_ms}ms — tools={x.tools}")
     lines.append("")
-    (RESULTS_DIR / "latest.md").write_text("\n".join(lines), encoding="utf-8")
+    (RESULTS_DIR / f"{stem}.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def run_case_live(case: dict[str, Any]) -> TurnLog:
+    """Run one live Nanobot turn; assertions use live_expect (not mock script)."""
+    from live_eval import check_live_expect, prepare_live_workspace, run_live_case_sync
+
+    started = time.perf_counter()
+    log = TurnLog(case_id=case["id"])
+    expect = case.get("live_expect") or {}
+    try:
+        with tempfile.TemporaryDirectory(prefix=f"p9live-{case['id']}-") as tmp:
+            ws_root = Path(tmp)
+            prepare_live_workspace(ws_root, case.get("setup") or {})
+            tools, content, usage, latency_ms = run_live_case_sync(
+                ws_root, case.get("prompt") or ""
+            )
+            log.tools = tools
+            log.prompt_tokens = int(usage.get("prompt_tokens") or usage.get("input_tokens") or 0)
+            log.completion_tokens = int(
+                usage.get("completion_tokens") or usage.get("output_tokens") or 0
+            )
+            log.latency_ms = latency_ms
+            check_live_expect(ws_root, expect, tools_used=tools, content=content)
+            log.ok = True
+    except Exception as exc:  # noqa: BLE001
+        log.ok = False
+        log.failure_type = case.get("failure_type_on_fail") or "assert_error"
+        msg = str(exc).lower()
+        if "no module named" in msg or "config not found" in msg:
+            log.failure_type = "env_error"
+        elif "timeout" in msg:
+            log.failure_type = "timeout"
+        elif "forbidden tool" in msg or "winget" in msg:
+            log.failure_type = "safety_violation"
+        log.detail = f"{exc}\n{traceback.format_exc()}"
+        if not log.latency_ms:
+            log.latency_ms = int((time.perf_counter() - started) * 1000)
+    return log
 
 
 def main() -> int:
     mode = (os.environ.get("P9_EVAL_MODE") or "mock").lower()
-    if mode == "live":
-        print(
-            "P9_EVAL_MODE=live is reserved; running mock harness "
-            "(live LLM wiring can be added once API keys are available).",
-            file=sys.stderr,
-        )
-        mode = "mock"
 
     cases: list[dict[str, Any]] = []
     for path in sorted(CASES_DIR.glob("*.json")):
@@ -395,8 +426,27 @@ def main() -> int:
         print("No cases found", file=sys.stderr)
         return 2
 
+    if mode == "live":
+        from live_eval import DEFAULT_LIVE_CASE_IDS
+
+        allow = {
+            x.strip()
+            for x in (os.environ.get("P9_EVAL_LIVE_IDS") or ",".join(DEFAULT_LIVE_CASE_IDS)).split(",")
+            if x.strip()
+        }
+        live_cases = [c for c in cases if c.get("live") and c["id"] in allow]
+        if not live_cases:
+            print("No live-enabled cases selected", file=sys.stderr)
+            return 2
+        print(f"P9 live eval: {len(live_cases)} cases → {', '.join(c['id'] for c in live_cases)}")
+        logs = [run_case_live(c) for c in live_cases]
+        write_reports(logs, mode="live", stem="live-latest")
+        passed = sum(1 for x in logs if x.ok)
+        print(f"P9 live eval: {passed}/{len(logs)} passed → {RESULTS_DIR / 'live-latest.md'}")
+        return 0 if passed == len(logs) else 1
+
     logs = [run_case(c) for c in cases]
-    write_reports(logs, mode=mode)
+    write_reports(logs, mode="mock", stem="latest")
     passed = sum(1 for x in logs if x.ok)
     print(f"P9 eval: {passed}/{len(logs)} passed → {RESULTS_DIR / 'latest.md'}")
     return 0 if passed == len(logs) else 1

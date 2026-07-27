@@ -7,20 +7,23 @@ Mock-first harness for the resume-level learning-coach project.
 From repo root:
 
 ```powershell
+# Mock (default, CI-safe, zero LLM cost)
 python learn/P9/eval/run_eval.py
-```
 
-Live LLM mode (optional, needs API key + gateway; reports tokens when provided via env stub):
-
-```powershell
-$env:P9_EVAL_MODE = "live"   # reserved; mock is default and CI-safe
+# Live sample (needs ~/.nanobot/config.json with API key; ~5 cases)
+$env:P9_EVAL_MODE = "live"
 python learn/P9/eval/run_eval.py
+# optional subset:
+$env:P9_EVAL_LIVE_IDS = "capture-inbox-todo,brief-generate-four-sections"
 ```
 
 Outputs:
 
-- `learn/P9/eval/results/latest.json`
-- `learn/P9/eval/results/latest.md`
+- `results/latest.md` + `latest.json` — mock
+- `results/live-latest.md` + `live-latest.json` — live sample
+
+Live cases use `live: true` + `live_expect` and run through `Nanobot.from_config(workspace=temp)`.
+
 
 ## Case schema
 

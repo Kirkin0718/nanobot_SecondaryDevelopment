@@ -19,5 +19,11 @@
     ],
     "tools_used": ["write_file"]
   },
-  "failure_type_on_fail": "wrong_file"
+  "failure_type_on_fail": "wrong_file",
+  "live": true,
+  "live_expect": {
+    "any_file_contains": [
+      {"glob": "inbox/*.md", "text": "周报"}
+    ]
+  }
 }

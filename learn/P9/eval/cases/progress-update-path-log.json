@@ -26,5 +26,11 @@
     ],
     "tools_used": ["edit_file"]
   },
-  "failure_type_on_fail": "wrong_file"
+  "failure_type_on_fail": "wrong_file",
+  "live": true,
+  "live_expect": {
+    "any_file_contains": [
+      {"glob": "learning/python-basics/*.md", "text": "变量"}
+    ]
+  }
 }
