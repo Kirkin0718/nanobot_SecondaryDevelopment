@@ -466,8 +466,18 @@ def main() -> int:
             return 2
         print(f"P9 live eval: {len(live_cases)} cases → {', '.join(c['id'] for c in live_cases)}")
         logs = [run_case_live(c) for c in live_cases]
-        write_reports(logs, mode="live", stem="live-latest")
         passed = sum(1 for x in logs if x.ok)
+        all_env = bool(logs) and all((not x.ok and x.failure_type == "env_error") for x in logs)
+        force = os.environ.get("P9_EVAL_LIVE_FORCE", "").strip() in {"1", "true", "yes"}
+        prev_path = RESULTS_DIR / "live-latest.json"
+        if all_env and prev_path.exists() and not force:
+            print(
+                "P9 live eval: all cases failed with env_error; "
+                "keeping existing live-latest.* (set P9_EVAL_LIVE_FORCE=1 to overwrite)",
+                file=sys.stderr,
+            )
+        else:
+            write_reports(logs, mode="live", stem="live-latest")
         print(f"P9 live eval: {passed}/{len(logs)} passed → {RESULTS_DIR / 'live-latest.md'}")
         return 0 if passed == len(logs) else 1
 
